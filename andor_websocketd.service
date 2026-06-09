@@ -1,0 +1,10 @@
+[Unit]
+Description=Andor websocketd wrapper
+
+[Service]
+Restart=always
+RestartSec=5s
+ExecStart=/home/andor/andorsvr_sock/websocketd --staticdir=/home/andor/andorsvr_sock --port=1234 nc localhost 8888
+
+[Install]
+WantedBy=multi-user.target

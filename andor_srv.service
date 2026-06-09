@@ -1,0 +1,14 @@
+[Unit]
+Description=Andor control via socket
+
+[Service]
+Restart=always
+RestartSec=10s
+StandardOutput=append:/home/andor/andorsvr_sock/andorsvr.log
+StandardError=append:/home/andor/andorsvr_sock/andorsvr_err.log
+WorkingDirectory=/home/andor/andorsvr_sock
+ExecStart=/home/andor/andorsvr_sock/andorsvr 
+
+[Install]
+WantedBy=multi-user.target
+

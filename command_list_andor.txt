@@ -1,0 +1,65 @@
+	if ( cmda == "BRKquit=true;  //quit
+AQD" && AcqMode!=3){	//single shot acquisition, send data only via socket, not in kin series!
+	AQR	//single shot acquisition, saves data to file
+	AQC" && AcqMode!=3){ //continuous acquisition (FVB or Image mode, also Accumulation Mode supported, but NOT Kinetic!)
+	AQP      //preparation cmd for kinetic series etc.
+	GTA	//Get Temperature
+	GTS	//Get Set Temperature
+	GAN	//Get Accumulation number
+	GKN	//Get kinetic s. number
+	GAM	//Get acquisition mode
+	GRM	//Get read mode
+	GET	//Get exposition time
+	GAT	//Get accumulation time (corrected for cycle overhead)
+	GHS	//Get horizontal speed
+	SHS	//Set horizontal speed (index 0..2)
+	SVS	//Set vertical speed (index 0..?) manual says: careful!
+	GKT	//Get kinetic cycle time
+	GRT	//Get readout time
+	GCT	//Get clean time
+	GST	//Get ALL Stats
+	GGR	//get current grating
+	GFM	//get current filter mode
+//	SFM	//set current filter mode - BUG in ANDOR, do not USE!!
+	SAN	//number of accums
+	SKN	//number in kinetic series
+	SET	//exposure time
+	SKT	//kinetic exposure time
+//	SAT	//accumulation exposure time
+	SRM	//select FVB mode
+	SAM	//select Single/Accumulation/Kinetic series Scan mode
+	SGA	//set gain
+	GGA	//get gain
+	GCL	//get calibration of wavelengths MIN
+	GCH	//get calibration of wavelengths MAX
+	GWL	//get current center wavelength
+//	GWR	//get wavelength range for current grating
+	STS	//set temperature
+	SWL	//set wavelength
+//	SZR	//go to zero order
+	SDO	//set detector offset
+	GDO	//get detector offset
+	SGO	//set grating offset
+	GGO	//get grating offset
+	SFL	//set focus mirror
+	GFL	//get focus mirror pos.
+	SOP	//set flipper mirror (output path) to direct output (CCD)
+	GOP	//get flipper mirror output path
+	SIP	//set flipper mirror (input path) to side output (APD)
+	GIP	//get flipper mirror input path
+	GTN	//get number of random tracks
+	STN	//set number of random tracks
+	ST0	//set pos of random tracks
+	ST1	//set pos of random tracks
+	ST2	//set pos of random tracks
+	ST3	//set pos of random tracks
+	SUP	//set singletrack pos
+	SUW	//set singletrack wid
+	GT0	//get random tracks pos
+	GT1	//get random tracks pos
+	GT2	//get random tracks pos
+	GT3	//get random tracks pos
+	GT3	//get random tracks pos
+	GUP	//get single track pos
+	GUW	//get single track wid
+	SGR	//set grating

@@ -1,0 +1,797 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>CounterSolis alpha</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			
+.uplot, .uplot *, .uplot *::before, .uplot *::after {box-sizing: border-box;}.uplot {font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";line-height: 1.5;width: max-content;}.u-title {text-align: center;font-size: 18px;font-weight: bold;}.u-wrap {background-color:transparent;position: relative;user-select: none;}.u-over, .u-under {position: absolute;}.u-under {overflow: hidden;}.uplot canvas {display: block;position: relative;width: 100%;height: 100%;}.u-legend {font-size: 14px;margin: auto;text-align: center;}.u-inline {display: block;}.u-inline * {display: inline-block;}.u-inline tr {margin-right: 16px;}.u-legend th {font-weight: 600;}.u-legend th > * {vertical-align: middle;display: inline-block;}.u-legend .u-marker {width: 1em;height: 1em;margin-right: 4px;border: 2px solid transparent;}.u-inline.u-live th::after {content: ":";vertical-align: middle;}.u-inline:not(.u-live) .u-value {display: none;}.u-series > * {padding: 4px;}.u-series th {cursor: pointer;}.u-legend .u-off > * {opacity: 0.3;}.u-select {background: rgba(255,255,255,0.1);position: absolute;pointer-events: none;}.u-cursor-x, .u-cursor-y {position: absolute;left: 0;top: 0;pointer-events: none;will-change: transform;z-index: 100;}.u-cursor-x {height: 100%;border-right: 1px dashed #0f0;}.u-cursor-y {width: 100%;border-bottom: 1px dashed #0f0;}.u-cursor-pt {position: absolute;top: 0;left: 0;border-radius: 50%;filter: brightness(85%);pointer-events: none;will-change: transform;z-index: 100;}.u-select.u-off, .u-cursor-x.u-off, .u-cursor-y.u-off, .u-cursor-pt.u-off {display: none;}
+	
+		body {
+			background-color:#000000;
+			color:#cccccc;
+			font-family:Monospace;
+			overflow-x:hidden;
+		}
+		input
+		{
+			background-color: #000000;
+			border: 1px solid #550000;
+			color: #ffaa00;
+			padding: 4px 4px;
+			text-align: center;
+			text-decoration: none;
+  			display: inline-block;
+  			font-size: 14px;
+			font-weight:bold;
+			font-family:Monospace;
+			outline:none;
+			border-radius:3px;
+			margin:2px 2px
+		}
+		input:read-only
+		{
+			background-color: #330000;
+			border: 1px solid #000000;
+			color: #999999;
+		}
+		input:disabled,
+		input[disabled]{
+			background-color: #333333;
+			color: #aa8888;
+			border: 1px solid transparent;
+		}
+
+
+		span { white-space: nowrap; 
+		
+		}	
+		button.lnk { font-family:Monospace;
+		}	
+		
+		textarea
+		{
+			width:100%;
+			background-color: #222222;
+			border: 1px solid transparent;
+			color: #00aa00;
+			overflow:hidden;
+  			display: inline-block;
+			font-size:14px;
+			font-family:Monospace;
+			outline:none;
+			padding:4px 4px;
+			border-radius:3px;
+			margin:2px 2px
+		}
+		
+		button
+		{
+			background-color: #550000;
+			border: 1px solid #000000;
+			color: #ffaa00;
+			padding: 4px 4px;
+			text-align: center;
+			text-decoration: none;
+  			display: inline-block;
+  			font-size: 14px;
+			font-weight:bold;
+			font-family:Monospace;
+			outline:none;
+			border-radius:3px;
+			margin:2px 0px
+  			z-index: 10000;
+		}
+		button:hover{
+			border: 1px solid #ffaa00;
+
+
+		}
+		button:disabled,
+		button[disabled]{
+			background-color: #333333;
+			color: #aa8888;
+			border: 1px solid transparent;
+		}
+
+
+		button.active{
+			background-color: #bb7700;
+			color: #0000aa;
+		}
+		button.spacer{
+			background-color: transparent;
+			border: 1px solid transparent;
+		}
+		button.spacer:hover{
+			border: 1px solid transparent;
+		}
+		button.status{
+		  background-color: #009900;
+		  color:#444444;
+		  font-weight:bold;
+		}
+		button.status:hover{
+			border: 1px solid #333333;
+		}
+ 
+		@keyframes glowing {
+        	0% {
+	          background-color: #000000;
+        	  box-shadow: 0 0 1px #550000;
+   		     }
+ 	        50% {
+      		  background-color: #aa0000;
+        	  box-shadow: 0 0 20px #aa0000;
+        	}
+        	100% {
+        	  background-color: #000000;
+        	  box-shadow: 0 0 1px #550000;
+        	}
+      		}
+     		button.wow {
+        	  animation: glowing 2000ms infinite;
+      		}	
+
+
+		/* Chrome, Safari, Edge, Opera */
+		input::-webkit-outer-spin-button,
+		input::-webkit-inner-spin-button {
+		  -webkit-appearance: none;
+		  margin: 0;
+		}
+
+		/* Firefox */
+		input[type=number] {
+		  -moz-appearance: textfield;
+		}
+
+
+		#imgcont {
+			position: relative;  /* Necessary for absolute positioning inside */
+		        width: 100%;  /* Resize the div to 50% width */
+		        height:auto;
+			margin: 0px;
+		        border: 0px solid black;
+			display:flex;
+			justify-content: center;  /* To center the image horizontally inside the container */
+			align-items: center;      /* To center the image vertically inside the container */
+
+		}
+
+		#snap {
+			width:100%;
+			display:block;
+			margin: 0;
+			position: relative;
+/*	top: 50%;
+			-ms-transform: translateY(-50%);
+			transform: translateY(-50%); */
+			image-rendering: crisp-edges;
+  			image-rendering: pixelated;
+			cursor: crosshair;
+
+		}
+
+		#vline{
+		  	position: relative;
+		  	height: 62vh;
+  			width: 1px;
+			left:50%;
+			top:0;
+  			border: 0px solid #a00;
+			background: #ff0000;
+  			z-index:997;
+/*			text-align:center;*/
+			display:block;
+			pointer-events: none;
+
+		}
+		#hline{
+		  	position: absolute;
+/*		  	height: 0px;*/
+  			width: 100%;
+			left:0;
+/*			top:128px;*/
+  			border: 1px solid rgba(255,128,0,0.66); 
+			margin:0px;
+			background: rgba(0,255,0,0.05);
+  			z-index:998;
+/*			text-align:center;*/
+			display:block;
+			pointer-events: none;
+		}
+
+
+		#pltcont {
+			width:100%;
+			height:63vh;
+			position:relative;
+
+			display: flex;
+			justify-content: center;  /* To center the image horizontally inside the container */
+			align-items: center;      /* To center the image vertically inside the container */
+
+
+		}
+	
+		span {
+			font-weight:bold;
+			border: 1px solid transparent;
+			font-size:3;
+			text-align:left;
+			
+		}
+
+		</style>
+
+<script src="uPlot.iife.js"></script>				
+			
+	<script language="javascript">
+		firsttime=true;
+		unitz='nm';
+		const data = [	Array(1024),Array(1024)	];
+		var dataX = [];
+		var dataY = [];
+
+		for (let x = 0; x < 1024; x++) {
+			data[0][x] = x;
+			dataX[x] = x;
+			data[1][x] = x;
+			dataY[x] = x;
+		}
+
+		var arrayLen=1024;
+		
+		const opts = {
+				width : Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0),
+				height : 0.6*Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0),
+//		width: 600,
+//		height: 400,
+				scales: {
+					x: {time: false},
+					y: {},
+				},
+
+ 				cursor: {
+					drag:{ 
+						x: true, y: true, dist:10, uni: Infinity
+					},
+				},
+
+
+				series: [{
+						label: "X",
+						stroke: "white",
+					},
+					{
+						label: "kc",
+						stroke: "orange",
+					}],
+				axes: [	{
+						stroke: "white",
+						ticks: {show: true,width:1,stroke:"#fff",size:10},
+						grid: {show: true,width:1,stroke:"#444"},
+					},
+					{
+						stroke: "white",
+						ticks: {show: true,width:1,stroke:"#fff",size:10},
+						grid: {show: true,width:1,stroke:"#444"},
+					}],
+			};
+		//console.log(ndata);
+ 		
+  
+	  var url = location.hostname + ':' + (parseInt(location.port));
+	  var ws = new WebSocket('ws://' + url);	  
+
+
+
+	ws.onopen = function() {
+			const allbutts = document.querySelectorAll('button')
+			for (var j=0;j<allbutts.length;j++){allbutts[j].disabled=true;}
+			const allins = document.querySelectorAll('input')
+			for (var j=0;j<allins.length;j++){allins[j].disabled=true;}
+			document.getElementById('stat').classList.add('wow');
+			document.getElementById('stat').innerHTML='BUSY';
+	}	
+
+	  ws.onmessage = function(msg) {
+		//console.log(msg.data);
+		smsg=msg.data.split(" ");
+		//console.log(smsg.length);
+		if (smsg[0]!=="OK" && smsg[0]!=="ER"){
+			const allbutts = document.querySelectorAll('button')
+			for (var j=0;j<allbutts.length;j++){allbutts[j].disabled=true;}
+			const allins = document.querySelectorAll('input')
+			for (var j=0;j<allins.length;j++){allins[j].disabled=true;}
+			document.getElementById('stat').classList.add('wow');
+			document.getElementById('stat').innerHTML='BUSY';
+			if (smsg[0]==="AQC" || smsg[0]==="AQD" || smsg[0]==="AQR"){document.getElementById('STP').disabled=false;}
+			if (smsg[0]==="AQC" || smsg[0]==="AQD" || smsg[0]=="AQR"){
+				document.getElementById('yauto').disabled=false;
+				document.getElementById('ysm').disabled=false;
+				document.getElementById('eV').disabled=false;
+				document.getElementById('nm').disabled=false;
+				document.getElementById('cm').disabled=false;
+			}
+		}
+
+
+		if ((smsg[0]==="OK" && smsg[1]!=="AQC" ) || smsg[0]==="ER"){
+	   		document.getElementById('stat').classList.remove('wow');
+			document.getElementById('stat').innerHTML='DONE';
+			const allbutts = document.querySelectorAll('button')
+			for (var j=0;j<allbutts.length;j++){allbutts[j].disabled=false;}
+			const allins = document.querySelectorAll('input')
+			for (var j=0;j<allins.length;j++){allins[j].disabled=false;}
+			if (firsttime){
+				Xsend("GST");
+				// Add a click event listener to the image
+				img=document.getElementById('snap');
+				img.addEventListener('click', function(event) {
+				// Get the bounding box of the image (its current size)
+				const rect = img.getBoundingClientRect();
+			    	// Get the natural size of the image (its original size)
+		       		const naturalWidth = img.naturalWidth;
+			        const naturalHeight = img.naturalHeight;
+	
+			        // Calculate the ratio of the current size to the natural size
+		        	const scaleX = naturalWidth / rect.width;
+			        const scaleY = naturalHeight / rect.height;
+	
+				// Calculate the x and y coordinates relative to the image
+				const xf = (event.clientX - rect.left) * scaleX;
+				const yf = (event.clientY - rect.top) * scaleY;
+				const aY = naturalHeight - yf + 0.5;	
+				console.log("click");
+				// Display the coordinates
+				Xsend(`SUP ${Math.round(aY)}`);
+				});
+	
+	
+
+
+				firsttime=false;
+			}
+		}
+
+		if ((smsg[0]==="OK" && (smsg[1]==="AQC" || smsg[1]==="AQD" || smsg[1]==="AQR"))){
+			document.getElementById('STP').disabled=false;
+		}
+
+
+		if (smsg[0]==="OK" && (smsg[1]==="AQD" || smsg[1]==="AQC" || smsg[0]=="AQR")){
+			document.getElementById('yauto').disabled=false;
+			document.getElementById('ysm').disabled=false;
+			document.getElementById('eV').disabled=false;
+			document.getElementById('nm').disabled=false;
+			document.getElementById('cm').disabled=false;
+	
+		 	if (smsg[2]==="0"){
+			//update img
+//				document.getElementById('plt').style.display = "none";
+
+//				document.getElementById('imgcont').style.display = "block";
+//				document.getElementById('vline').style.display = "block";
+//				document.getElementById('hline').style.display = "block";
+//				document.getElementById('snap').style.display = "block";
+//				document.getElementById('snap').src = "./shm/andor.bmp?random="+new Date().getTime(); 
+				//updatehline();
+				switchmode();
+				updatehline();
+				console.log('img update');
+			        // Select the image and output element
+			        const img = document.getElementById('snap');
+
+			        
+			}else{
+				document.getElementById('plt').style.display = "block";
+				document.getElementById('imgcont').style.display = "none";
+				//document.getElementById('snap').style.display = "none";
+				document.getElementById('vline').style.display = "none";
+				//document.getElementById('hline').style.display = "none";
+			}
+			var OarrayLen = smsg.length;    
+			dataArr = smsg.slice(3,OarrayLen);
+			var CarrayLen = dataArr.length;
+			dataX.length=0;
+			dataY.length=0;
+	    		dataX = dataArr.slice(0,CarrayLen/2);
+	    		dataY = dataArr.slice(CarrayLen/2,CarrayLen);
+			arrayLen = dataY.length;
+			console.log(arrayLen);
+			laser = document.getElementById('laser').value;
+			const data = [	Array(arrayLen),Array(arrayLen)	];
+			
+
+				if (unitz==='eV'){
+					for (let x = 0; x < arrayLen; x++) {
+						data[0][x] = 1240./dataX[arrayLen-x-1];
+						data[1][x] = dataY[arrayLen-x-1]/1000;
+					}
+				}
+				if (unitz==='nm'){
+					for (let x = 0; x < arrayLen; x++) {
+						data[0][x] = +dataX[x];
+						data[1][x] = dataY[x]/1000;
+					}
+				}
+				if (unitz==='cm'){
+					for (let x = 0; x < arrayLen; x++) {
+						data[0][x] = (10000000/laser)-(10000000/dataX[x]);
+						data[1][x] = dataY[x]/1000;
+					}
+				}
+			
+			
+			msgtoprint=smsg[0]+" "+smsg[1]+" "+smsg[2];
+			u.setData(data,onceauto);
+	 		u.redraw((autoscale || onceauto) || firsttime);
+			onceauto=false;
+			firsttime=false;
+		}else{msgtoprint=msg.data;}
+
+
+		if((smsg[0]==="OK" || smsg[0]==="ER") && smsg.length >= 3 && smsg[1]!=="AQD" && smsg[1]!=="AQC" && smsg[1]!=="AQR") {
+			for (var i=1;i<smsg.length;i+=2){
+				//console.log("Update: "+smsg[i]+"/"+smsg[i+1]);
+				idname1="G"+smsg[i].substring(1);	
+				elid1=document.getElementById(idname1);
+				if(elid1!=null){
+					eltyp1=elid1.tagName.toLowerCase();
+					if(eltyp1==="input"){
+						elid1.value=smsg[i+1];
+						if ((elid1.id == "GCL")||(elid1.id == "GCH")||(elid1.id == "GWL")){
+							elid1.value=parseFloat(smsg[i+1]).toFixed(1);
+						}
+						if (elid1.id == "GET"){
+							elid1.value=parseFloat(smsg[i+1]).toFixed(3);
+						}
+						if ((elid1.id == "GCL")||(elid1.id == "GCH")){
+							xyscl();
+						}
+					}
+				}
+				idname2="S"+smsg[i].substring(1);	
+				elid2=document.getElementById(idname2);
+				if(elid2!=null){
+					eltyp2=elid2.tagName.toLowerCase();
+					if(eltyp2==="input"){
+						elid2.value=smsg[i+1];
+						if ((elid2.id == "SWL")){
+							elid2.value=parseFloat(smsg[i+1]).toFixed(1);
+						}
+						if ((elid2.id == "SET")||(elid2.id == "GET")){
+							elid2.value=parseFloat(smsg[i+1]).toFixed(3);
+						}
+					}
+				}
+
+				idname3="S"+smsg[i].substring(1);	
+				
+				var elids=document.querySelectorAll("[id^='"+idname3+"']");
+				//console.log(elids);
+				for (var j=0;j<elids.length;j++){elids[j].classList.remove('active');}
+					
+				elid3=document.getElementById(idname3+smsg[i+1]);
+
+				//console.log(idname3+smsg[i+1]);
+
+				if(elid3!=null){
+					eltyp3=elid3.tagName.toLowerCase();
+					if(eltyp3==="button"){elid3.classList.add('active');}
+				}
+
+				idname4="G"+smsg[i].substring(1);	
+				
+				var elids=document.querySelectorAll("[id^='"+idname4+"']");
+				//console.log(elids);
+				for (var j=0;j<elids.length;j++){elids[j].classList.remove('active');}
+					
+				elid4=document.getElementById(idname3+smsg[i+1]);
+
+				//console.log(idname4+smsg[i+1]);
+
+				if(elid4!=null){
+					eltyp3=elid4.tagName.toLowerCase();
+					if(eltyp3==="button"){elid3.classList.add('active');}
+				}
+
+			
+			}
+
+			switchmode();
+			updatehline();
+
+		}
+
+		if (msg.data != ""){document.f.out.value += msgtoprint + '\n';}
+	  	document.f.out.scrollTop = document.f.out.scrollHeight;
+	  }
+	 
+	
+	 ws.onclose = function() { alert('Connection unexpectedly closed.'); }
+
+	 function send() {
+		str=document.f.in.value;
+	    	ws.send('' + str.toUpperCase() + '\n');
+		document.f.out.value += str.toUpperCase() + '\n';
+	  	document.f.out.scrollTop = document.f.out.scrollHeight;
+	  	document.f.in.value='';
+	  }
+	 function Xsend(val) {
+		const allbutts = document.querySelectorAll('button')
+		for (var j=0;j<allbutts.length;j++){allbutts[j].disabled=true;}
+		const allins = document.querySelectorAll('input')
+		for (var j=0;j<allins.length;j++){allins[j].disabled=true;}
+		document.getElementById('stat').classList.add('wow');
+		document.getElementById('stat').innerHTML='BUSY';
+		document.getElementById('yauto').disabled=false;
+		document.getElementById('ysm').disabled=false;
+		document.getElementById('eV').disabled=false;
+		document.getElementById('nm').disabled=false;
+		document.getElementById('cm').disabled=false;
+	
+
+
+		if (val==="AQC" || val==="AQR" || val==="AQD"){document.getElementById('STP').disabled=false;}
+	    	ws.send(val);
+		document.f.out.value += val + '\n';
+	  	document.f.out.scrollTop = document.f.out.scrollHeight;
+	  }
+	function ysclm() {
+		mx=u.scales.y.max;
+		mn=u.scales.y.min;
+
+		u.setScale('y',{min:mn,max:mn+(mx-mn)*2.0,});
+		autoscale=false;
+		document.getElementById('yauto').classList.remove('active');
+	}
+	function Xconvert(unit) {
+		unitz=unit;
+		
+		document.getElementById('eV').classList.remove('active');
+		document.getElementById('nm').classList.remove('active');
+		document.getElementById('cm').classList.remove('active');
+		document.getElementById(unit).classList.add('active');
+		onceauto=true;
+
+		xyscl();
+	}
+
+	function switchmode(){
+
+		if (document.getElementById('SRM4').classList.contains('active')){
+				document.getElementById('plt').style.display = "none";
+				document.getElementById('imgcont').style.display = "block";
+				document.getElementById('vline').style.display = "block";
+//				document.getElementById('hline').style.display = "block";
+//				document.getElementById('snap').style.display = "block";
+				document.getElementById('snap').src = "./shm/andor.bmp?random="+new Date().getTime(); 
+
+		}else{
+				document.getElementById('plt').style.display = "block";
+				document.getElementById('imgcont').style.display = "none";
+				document.getElementById('vline').style.display = "none";
+//				document.getElementById('hline').style.display = "none";
+//				document.getElementById('snap').style.display = "none";
+		}	
+
+
+
+
+
+		console.log('disp mode selected');
+
+	}
+
+	function updatehline(){
+
+		const hlinebox = document.getElementById('hline');
+		const img = document.getElementById('snap');
+        	const pos = document.getElementById('SUP');
+	        const wid = document.getElementById('SUW');
+		//console.log("Position: "+pos.value);
+            	const rect = img.getBoundingClientRect();
+
+            	const naturalHeight = img.naturalHeight;
+
+            	// Calculate the ratio of the current size to the natural size
+            	const scaleY = naturalHeight / rect.height;
+
+		console.log('nath: '+rect.height);	
+            	// Calculate the x and y coordinates relative to the image
+//		clientY = rect.height + 1 - ((pos.value - wid.value/2) / scaleY);
+		clientY = ((pos.value - wid.value/2)) / scaleY - 1;
+		clientW = (wid.value / scaleY);
+
+		hlinebox.style.bottom=`${clientY}px`;
+		hlinebox.style.height=`${clientW}px`;
+		console.log('line upd: '+clientY);	
+		//hlinebox.style.top=`${pos.value/scaleY}px`;
+		//hlinebox.style.height=`${wid.value/scaleY}px`;
+	}
+
+	function xyscl() {
+		mn=+document.getElementById('GCL').value;
+		mx=+document.getElementById('GCH').value;
+		laser=document.getElementById('laser').value
+    //		if ((mx-mn)<5.){mx=1024;mn=0;}
+
+
+				if (unitz==='eV'){
+						mn = 1240./mn;
+						mx = 1240./mx;
+				}
+				if (unitz==='cm'){
+						mn = (10000000/laser)-(10000000/mn);
+						mx = (10000000/laser)-(10000000/mx);
+				}
+
+				if (unitz==='eV'){
+					for (let x = 0; x < arrayLen; x++) {
+						data[0][x] = 1240./dataX[arrayLen-x-1];
+						data[1][x] = dataY[arrayLen-x-1]/1000;
+					}
+				}
+				if (unitz==='nm'){
+					for (let x = 0; x < arrayLen; x++) {
+						data[0][x] = +dataX[x];
+						data[1][x] = dataY[x]/1000;
+					}
+				}
+				if (unitz==='cm'){
+					for (let x = 0; x < arrayLen; x++) {
+						data[0][x] = (10000000/laser)-(10000000/dataX[x]);
+						data[1][x] = dataY[x]/1000;
+					}
+				}
+	
+
+	//	console.log(mn);
+	//	console.log(mx);
+		u.setData(data,true);
+		u.setScale('x',{min:mn,max:mx});
+//		onceauto=true;
+	}
+
+
+	</script>
+	
+	
+	</head>
+	
+	
+	<body>
+		<div id="pltcont">
+			<div style="z-index:0" id="plt"></div>
+			<div id="vline"></div>
+			<div id="imgcont">
+				<div id="hline"></div>
+				<img id="snap" src=./shm/andor.bmp>
+			</div>
+		</div>
+		<script>
+
+			let u = new uPlot(opts, data,document.getElementById('plt'));
+			
+		</script>
+		<form name="f" onsubmit="return false;" novalidate>
+
+			<span>
+				<button id="stat" type="button" class="status" onclick="Xsend('GST');">BUSY</button>
+				<button type="button" onClick="Xsend('AQD')">Run</button>
+				<button type="button" onClick="Xsend('AQC')">Loop</button>
+				<button type="button" onClick="Xsend('AQR')">rUN</button>
+				<button id="STP" type="button" onClick="Xsend(' ')">Stop</button>
+				<button type="button" class="spacer"></button>
+				<button id="SRM0" type="button" onClick="Xsend('SRM 0')">FVB</button>
+				<button id="SRM4" type="button" onClick="Xsend('SRM 4')">IMG</button>
+				<button id="SRM3" type="button" onClick="Xsend('SRM 3')">Track:</button> 
+				<input id="SUP" style="width:3em;overflow:hidden;text-align:center;" type=number value=-1 onkeypress="if(event.keyCode==13){Xsend('SUP '+this.value);return false;}"><input id="SUW" style="width:2em;overflow:hidden;text-align:center;" type=number value=-1 onkeypress="if(event.keyCode==13){Xsend('SUW '+this.value);return false;}">
+<!--				<button id="SRM2" type="button" onClick="Xsend('SRM 2')">RTr</button> -->
+				<button type="button" class="spacer"></button>
+			</span>
+			<span>
+				<button id="yauto" type="button" onClick="if(autoscale){autoscale=false;this.classList.remove('active');}else{autoscale=true;this.classList.add('active');};u.redraw(autoscale);">Yaut</button>
+				<button id="ysm" type="button" onClick="ysclm();">Ysc-</button>
+				<button type="button" class="spacer"></button>
+				<button id="eV" type="button" onClick="Xconvert('eV')">eV</button>
+				<button id="nm" type="button" onClick="Xconvert('nm')">nm</button>
+				<button id="cm" type="button" onClick="Xconvert('cm')">cm/&Lambda;=</button>
+				<input id="laser" style="width:4em;overflow:hidden;text-align:center;" type=number value=632.8 onkeypress="if(event.keyCode==13){ Xconvert('cm');return false;}">
+				<button type="button" class="spacer"></button>
+			</span>
+			<span>
+				<button id="SAM1" type="button" onClick="Xsend('SAM 1')">Single</button>
+				<button id="SAM3" type="button" onClick="Xsend('SAM 3')">Series</button>
+				<button type="button" class="spacer"></button>
+				<button type="button" onClick="Xsend('SET '+document.f.SET.value)">t/s=</button>
+				<input id="SET" style="width:4em;overflow:hidden;text-align:center;" type=number value=-1 onkeypress="if(event.keyCode==13){Xsend('SET '+this.value);return false;}">
+				<button type="button" onClick="Xsend('SKN '+document.f.SKN.value)">n=</button>
+				<input id="SKN" style="width:3em;overflow:hidden;text-align:center;" type=number value=-1 onkeypress="if(event.keyCode==13){Xsend('SKN '+this.value);return false;}">
+	
+				<button type="button" class="spacer"></button>
+			</span>
+			<span>
+			<button type="button" onClick="Xsend('SWL '+document.f.SWL.value)">λ/nm=</button>
+				<input readonly id="GCL" style="width:5em;overflow:hidden;text-align:center;" type=number value=-1>
+				<input id="SWL" style="width:4em;overflow:hidden;text-align:center;" type=number value=-1 onkeypress="if(event.keyCode==13){Xsend('SWL '+this.value);return false;}">
+				<input readonly id="GCH" style="width:5em;overflow:hidden;text-align:center;" type=number value=-1>
+				<button type="button" class="spacer"></button>
+			</span>
+			<span>
+				<button id="SGR1" type="button" onClick="Xsend('SGR 1')">G1</button>
+				<button id="SGR2" type="button" onClick="Xsend('SGR 2')">G2</button>
+				<button id="SGR3" type="button" onClick="Xsend('SGR 3')">G3</button>
+				<button id="SGR4" type="button" onClick="Xsend('SGR 4')">G4</button>
+				<button type="button" class="spacer"></button>
+			</span>
+			<span>
+
+				<button id="SGA0" type="button" onClick="Xsend('SGA 0')">1x</button>
+				<button id="SGA1" type="button" onClick="Xsend('SGA 1')">2x</button>
+				<button id="SGA2" type="button" onClick="Xsend('SGA 2')">4x</button>
+				<button type="button" class="spacer"></button>
+			</span>
+			<span>
+	
+				<button id="SHS0" type="button" onClick="Xsend('SHS 0')">2MHz</button>
+				<button id="SHS1" type="button" onClick="Xsend('SHS 1')">1MHz</button>
+				<button id="SHS2" type="button" onClick="Xsend('SHS 2')">50kHz</button>
+				<button type="button" class="spacer"></button>
+			</span>
+			<span>
+				<button type="button">f=</button>
+				<button type="button" onClick="Xsend('SFL -5');">&lt;</button>
+				<input id="SFL" readonly style="width:3em;overflow:hidden;text-align:center;" type=number value=-1>
+				<button type="button" onClick="Xsend('SFL 5');">&gt;</button>
+				<button type="button" class="spacer"></button>
+				<button type="button" onClick="Xsend('SDO '+document.f.SDO.value)">d0=</button>
+				<input id="SDO" style="width:4em;overflow:hidden;text-align:center;" type=number value=-1 onkeypress="if(event.keyCode==13){Xsend('SDO '+this.value);return false;}">
+				<button type="button" class="spacer"></button>
+				<button type="button" onClick="Xsend('SGO '+document.f.SGO.value)">g0=</button>
+				<input id="SGO" style="width:3em;overflow:hidden;text-align:center;" type=number value=-1 onkeypress="if(event.keyCode==13){Xsend('SGO '+this.value);return false;}">
+
+			</span>
+			<span>
+				<button id="SOP0" type="button" onClick="Xsend('SOP 0')">CCD</button>
+				<button id="SOP1" type="button" onClick="Xsend('SOP 1')">APD</button>
+				<button type="button" class="spacer"></button>
+				<button id="SIP0" type="button" onClick="Xsend('SIP 0')">IN1</button>
+				<button id="SIP1" type="button" onClick="Xsend('SIP 1')">IN2</button>
+				<button type="button" class="spacer"></button>
+			</span>
+			<span>
+				<button type="button" onClick="Xsend('STS '+document.f.STS.value)">T/&degC=</button>
+				<input id="STS" style="width:3em;overflow:hidden;text-align:center;" type=number value=-1 onkeypress="if(event.keyCode==13){Xsend('STS '+this.value);return false;}">
+				<input readonly id="GTA" style="width:3em;overflow:hidden;text-align:center;" type=number value=-1>
+				<button type="button" class="spacer"></button>
+			</span>
+			<span>
+				<button type="button" class="spacer">Save:</button>
+				<button class="lnk" type="button" onClick="window.location='./shm/andor.dat'">DAT</button>
+				<button class="lnk" type="button" onClick="window.location='./shm/andor.cal'">CAL</button>
+		
+				<button type="button" class="spacer"></button>
+			</span>
+			<span>
+				<button type="submit" onClick="send();return false;">CMD=</button><input style="width:10em;background-color:transparent;border:1px solid #555;text-align:left" type="text" id="in" onkeypress="if(event.keyCode==13){send();return false;}"> 	
+			
+			</span>
+			<textarea readonly rows="8" id="out"></textarea>
+			
+		</form>
+		<script>
+			autoscale=true;
+			onceauto=true;
+			document.getElementById("yauto").classList.add("active");
+			document.getElementById(unitz).classList.add('active');
+			u.redraw(autoscale);
+
+		</script>
+	
+		</body>
+</html>
+
