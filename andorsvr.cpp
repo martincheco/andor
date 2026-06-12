@@ -1189,7 +1189,7 @@ int sockHandlerNoBlock(){ //detects activity and handles the sockets without blo
 								break; // cmd is ready
 							} else {
 								// Not a stop command, reply busy and ignore
-								std::string busy_msg = "BUSY\r\n";
+								std::string busy_msg = "ER BSY\r\n";
 								send(sd, busy_msg.c_str(), busy_msg.length(), 0);
 							}
 						}
